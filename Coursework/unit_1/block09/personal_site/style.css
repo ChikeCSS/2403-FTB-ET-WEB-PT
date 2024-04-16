@@ -1,0 +1,12 @@
+body {
+    background-color: red;
+    color: white;
+}
+
+.topnav {
+    text-align: right;
+  }
+
+  .currentpage {
+    font-weight: bold;
+  }
