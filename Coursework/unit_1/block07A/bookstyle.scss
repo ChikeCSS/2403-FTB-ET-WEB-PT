@@ -1,0 +1,50 @@
+$color-1: red;
+$color-2: blueviolet;
+$color-3: purple;
+$color-4: blue;
+$color-5: black;
+$color-6: silver;
+$size-1: 35px;
+$size-2: 30px;
+$size-3: 25px;
+$size-4: 20px;
+$border-1: solid;
+$border-2: thin;
+
+.class-1 {
+  color: $color-1;
+  border-color: $color-5;
+  background-color: $color-6;
+  font-size: $size-1;
+  border-style:$border-1;
+  border-width: $border-2;
+  text-align: center;
+}
+
+.class-2 {
+  color: $color-2;
+  font-size: $size-2;
+  text-align: center;
+}
+
+.class-3 {
+  color: $color-3;
+  font-size: $size-3;
+  text-align: center;
+}
+
+.class-4 {
+  color: $color-4;
+  background-color: $color-5;
+  font-size: $size-4;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.class-5 {
+  font-size: $size-3;
+  text-align: center;
+  margin-left: auto;
+  display: table;
+}
