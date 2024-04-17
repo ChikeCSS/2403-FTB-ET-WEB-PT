@@ -1,12 +1,42 @@
 body {
-    background-color: red;
+    background-color: blue;
     color: white;
 }
 
 .topnav {
+    background-color: gray;
     text-align: right;
+  }
+
+  .name {
+    font-weight: bold;
+    float: left;
   }
 
   .currentpage {
     font-weight: bold;
+    color: white;
+  }
+
+  .otherpages {
+    color: white;
+  }
+
+  
+  .picright {
+    margin: 10px 0px 10px 10px;
+    float: right;
+    width: 40%;
+  }
+
+  
+  .picleft {
+    margin: 10px 10px 10px 0px;
+    float: left;
+    width: 40%;
+  }
+
+  .portclass {
+    background-color: white;
+    color: black;
   }
