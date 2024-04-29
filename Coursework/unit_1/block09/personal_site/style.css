@@ -1,42 +1,76 @@
+
+
+@media (max-width: 768px) {
+  .container {
+    margin: 0 auto !important;
+    padding: 0 auto !important;
+  }
+}
+
 body {
-    background-color: blue;
-    color: white;
+  background-color: blue;
+  color: white;
 }
 
 .topnav {
-    background-color: gray;
-    text-align: right;
-  }
+  background-color: gray;
+  text-align: right;
+}
 
-  .name {
-    font-weight: bold;
-    float: left;
-  }
+.name {
+  font-weight: bold;
+  float: left;
+}
 
-  .currentpage {
-    font-weight: bold;
-    color: white;
-  }
+.currentpage {
+  font-weight: bold;
+  color: white;
+}
 
-  .otherpages {
-    color: white;
-  }
+.currentpage:hover {
+  background-color: white;
+  color: gray;
+}
 
-  
-  .picright {
-    margin: 10px 0px 10px 10px;
-    float: right;
-    width: 40%;
-  }
+.otherpages {
+  color: white;
+}
 
-  
-  .picleft {
-    margin: 10px 10px 10px 0px;
-    float: left;
-    width: 40%;
-  }
+.otherpages:hover {
+  background-color: white;
+  color: gray;
+}
 
-  .portclass {
-    background-color: white;
-    color: black;
-  }
+.picright {
+  margin: 10px 0px 10px 10px;
+  float: right;
+  width: 40%;
+}
+
+.picleft {
+  margin: 10px 10px 10px 0px;
+  float: left;
+  width: 40%;
+}
+
+.portclass {
+  background-color: white;
+  color: black;
+}
+
+#submit {
+  background-color: gray;
+  color: white;
+}
+
+#submit:hover {
+  background-color: white;
+  color: gray;
+}
+
+input[type=text] {
+  width: 100%;
+  padding: 10px 10px;
+  margin: 10px 0;
+  box-sizing: border-box;
+}
