@@ -1,0 +1,14 @@
+{
+  "name": "demo_solution",
+  "version": "1.0.0",
+  "description": "Guided in-class project for Block 18: Testing",
+  "main": "test.js",
+  "scripts": {
+    "test": "jest test.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "jest": "^29.7.0"
+  }
+}
