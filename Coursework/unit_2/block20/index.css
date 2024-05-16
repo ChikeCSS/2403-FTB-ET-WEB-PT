@@ -1,27 +1,11 @@
 body {
-  text-align: center;
-  background-color: black;
-  color: #aadeee;
+  padding: 1rem;
 }
 
-form {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin: 0 30%;
-}
-
-label {
-  margin: 12px;
-}
-
-input {
-  margin: 6px auto;
-}
-
-.active {
-  color: black;
-  border-radius: 12px;
-  margin: 0 100px;
-  background-color: #aabcee;
+output {
+  display: block;
+  min-height: 1rem;
+  padding: 0.5rem;
+  border: 1px solid black;
+  border-radius: 3px;
 }

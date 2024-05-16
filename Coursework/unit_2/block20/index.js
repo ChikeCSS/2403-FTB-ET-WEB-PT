@@ -1,65 +1,41 @@
+//create numbers array
 const state = {
   numbers: [],
-  total: 0,
+  odds: [],
+  evens: [],
 };
 
-/**
- * 👉 STEP 1: Grab the `form`, `output` and div with a class of `total`
- * from the html document and save them to variables
- */
+//grab & list queries
 const form = document.querySelector("form");
+console.log(form);
 const output = document.querySelector("output");
-const total = document.querySelector(".total");
+console.log(output);
+const sortOne = document.getElementById("sortOne");
+console.log(sortOne);
+const sortAll = document.getElementById("sortAll");
+console.log(sortAll);
+const idOdds = document.querySelectorAll("output");
+console.log(idOdds);
+const idEvens = document.querySelectorAll("output");
+console.log(idEvens);
 
-console.log("form", form);
-console.log("output", output);
-console.log("total", total);
-
-/**
- * 👉 STEP 2: Add an event listener to the form element which will wait for
- * a submit event and call the function `addNumber`
- *
- * Listening for `submit` is almost always better than the button `click`
- */
+//add listeners
 form.addEventListener("submit", addNumber);
+sortOne.addEventListener("click", sortOdds);
+sortAll.addEventListener("click", () => {
+  sortOdds();
+  sortEvens();
+});
 
-/**
- * 👉 STEP 3: Add an event listener to the total element which will wait for
- * a click event and call the function `onNumberClick`
- *
- * This function uses event bubbling:
- *      we attach the event listener to the parent so that we don't have to attach it to each child
- */
-total.addEventListener("click", onNumberClick);
-
-/**
- * 👉 STEP 4: Complete the function so that it renders an array of numbers separated by commas to the element passed
- *
- * Note: This will be used in the addNumber function
- *
- *
- * @param {Number[]} numberBank - array of integers
- * @param {Object} element - DOM element to replace the children of
- */
+//render numbers (e.g. [1, 2, 3] --> "1, 2, 3")
 function renderNumbers(numberBank, element) {
-  ///[1, 2, 3] --> "1, 2, 3"
   const commaNumberBank = numberBank.join(", ");
   element.replaceChildren(commaNumberBank);
 }
 
-/**
- * 👉 STEP 5: Complete the function so that it adds the submitted number from the form into `numbers`, clears the form, and re-renders the page.
- *
- * Hint: Make sure to check it's a number before adding it into `numbers`
- *
- * Note: use renderNumbers to re-render the page
- *
- * @param {Event} event the deepest element that was clicked
- */
+//add number to number bank
 function addNumber(event) {
-  //prevent page from refreshing
   event.preventDefault();
-
   //get the number from the form
   const number = form.elements.number.value;
 
@@ -70,32 +46,45 @@ function addNumber(event) {
     state.numbers.push(number);
     console.log(state.numbers);
 
-    //add number to running total
-    state.total += parseInt(number);
-
-    //re-render total on page
-    total.replaceChildren(state.total);
-
     //re-render on numbers on page
     renderNumbers(state.numbers, output);
   }
+
   //clear form
   form.elements.number.value = null;
 }
 
-/**
- * 👉 STEP 6: Complete the function so that it updates the class of the event target to `active`
- *
- * Note: There are css styles applied to this class so the style of the
- * number should toggle on and off when clicking the total number
- *
- * @param {Event} event the deepest element that was clicked
- */
-function onNumberClick(event) {
-  console.log(event.target.classList.contains("active"));
-  if (event.target.classList.contains("active")) {
-    event.target.classList.remove("active");
-  } else {
-    event.target.classList.add("active");
+//add odd numbers to odds array
+function sortOdds(event) {
+  for (let i = 0; i < state.numbers.length; i++) {
+    if (state.numbers[i] % 2 === 1 && !state.odds.includes(state.numbers[i])) {
+      state.odds.push(state.numbers[i]);
+    }
   }
+
+  //console log that odds array is functioning
+  console.log(state.odds);
+
+  //re-render on numbers on page
+  renderNumbers(state.odds, idOdds[1]);
 }
+
+//add even numbers to evens array
+function sortEvens(event) {
+  for (let i = 0; i < state.numbers.length; i++) {
+    if (state.numbers[i] % 2 === 0 && !state.evens.includes(state.numbers[i])) {
+      state.evens.push(state.numbers[i]);
+    }
+  }
+
+  //console log that evens array is functioning
+  console.log(state.evens);
+
+  //re-render on numbers on page
+  renderNumbers(state.evens, idEvens[2]);
+}
+
+//prevent page from refreshing
+form.addEventListener("submit", (event) => {
+  event.preventDefault();
+});
