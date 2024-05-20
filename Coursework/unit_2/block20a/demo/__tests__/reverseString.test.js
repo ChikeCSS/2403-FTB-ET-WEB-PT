@@ -1,4 +1,4 @@
-// 👉 STEP 1:  Import reverseString from reverse-string.js
+// 👉 STEP 1:  Import reverseString from index.js
 const { reverseString } = require("../index");
 //👉 STEP 2: Add a describe() block for the function we will test
 describe("reverseString", () => {
