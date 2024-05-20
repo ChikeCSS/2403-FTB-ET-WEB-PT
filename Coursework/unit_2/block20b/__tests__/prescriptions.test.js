@@ -76,3 +76,22 @@ describe("getTotalCost()", () => {
 });
 
 // TODO: Write tests for applyDiscount() and applyCoupon()
+test("price after discount", () => {
+  expect(applyDiscount(8, 1)).toBe(6);
+  expect(applyDiscount("string", 1)).toBe(NaN);
+  expect(applyDiscount(-8, 1)).toBe(-6);
+  expect(applyDiscount(8, -1)).toBe(6);
+  expect(applyDiscount("8", 1)).toBe(6);
+  expect(applyDiscount(8, "1")).toBe(6);
+});
+
+
+test("price after coupon", () => {
+  expect(applyCoupon(20, true)).toBe(10);
+  expect(applyCoupon("20", true)).toBe(10);
+  expect(applyCoupon(-20, true)).toBe(-30);
+  expect(applyCoupon(20, false)).toBe(20);
+  expect(applyCoupon("20", false)).toBe(20);
+});
+
+// npm run test prescriptions.test.js

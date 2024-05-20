@@ -82,7 +82,11 @@ describe("The document", () => {
 
     calculateButton.click();
 
+    const output = document.querySelector("#cost");
+
     // TODO: Change this assertion to check the correct value.
-    expect(true).toBe(false);
+    expect(output.textContent).toBe("$0.00");
   });
 });
+
+// npm run test dom.test.js
