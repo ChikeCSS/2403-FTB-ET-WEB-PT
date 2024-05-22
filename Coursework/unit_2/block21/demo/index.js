@@ -6,6 +6,9 @@ const API_URL = `https://fsa-crud-2aa9294fe819.herokuapp.com/api/${COHORT}/recip
 /**
  * 👉 STEP 1: Create an object called state that holds an array for recipe objects
  */
+const state = {
+  recipes: [],
+};
 
 /**
  * 👉 STEP 2: Complete the function so that it:
@@ -16,6 +19,11 @@ const API_URL = `https://fsa-crud-2aa9294fe819.herokuapp.com/api/${COHORT}/recip
  */
 const fetchAllRecipes = async () => {
   try {
+    const response = await fetch(API_URL);
+    const data = await response.json();
+    state.recipes = data.data;
+
+    renderAllRecipes();
   } catch (error) {
     console.log(error);
   }
@@ -29,8 +37,38 @@ const fetchAllRecipes = async () => {
  *
  * Note: date isn't used in this API but you will need to know how to work with it in the workshop
  */
-const createNewRecipe = async (name, imageUrl, description, date) => {
+
+/**
+ * 
+ * JS  {
+        name, 
+        imageUrl: image_url,
+        description,
+ } -----
+
+ JSON.STRINGIFY 
+
+  --> JSON {
+        "name": "whatever name", 
+        "imageUrl": "image_url/path",
+        "description": "Some good description",
+ }
+ */
+const createNewRecipe = async (name, image_url, description, date) => {
   try {
+    const response = await fetch(API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name, //shorthand when variable is same name as key of object
+        imageUrl: image_url,
+        description,
+        // date: new Date(date).toISOString()
+      }),
+    });
+    await fetchAllRecipes();
   } catch (error) {
     console.log(error);
   }
@@ -43,6 +81,10 @@ const createNewRecipe = async (name, imageUrl, description, date) => {
  */
 const removeRecipe = async (id) => {
   try {
+    await fetch(`${API_URL}/${id}`, {
+      method: "DELETE",
+    });
+    await fetchAllRecipes();
   } catch (error) {
     console.log(error);
   }
