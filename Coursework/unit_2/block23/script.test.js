@@ -28,7 +28,25 @@ describe("fetchAllPlayers", () => {
 });
 
 // TODO: Tests for `fetchSinglePlayer`
+describe("fetchSinglePlayer", () => {
+  let players;
+  beforeAll(async () => {
+    players = await fetchSinglePlayer();
+  });
+});
 
 // TODO: Tests for `addNewPlayer`
+describe("addNewPlayer", () => {
+  let players;
+  beforeAll(async () => {
+    players = await addNewPlayer();
+  });
+});
 
 // (Optional) TODO: Tests for `removePlayer`
+describe("removePlayer", () => {
+  let players;
+  beforeAll(async () => {
+    players = await removePlayer();
+  });
+});

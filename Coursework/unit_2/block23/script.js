@@ -1,7 +1,11 @@
 // Use the API_URL variable to make fetch requests to the API.
 // Replace the placeholder with your cohort name (ex: 2109-UNF-HY-WEB-PT)
-const cohortName = "YOUR COHORT NAME HERE";
+const cohortName = "2403-FTB-ET-WEB-PT";
 const API_URL = `https://fsa-puppy-bowl.herokuapp.com/api/${cohortName}`;
+
+const state = {
+  players: [],
+};
 
 /**
  * Fetches all players from the API.
@@ -10,6 +14,13 @@ const API_URL = `https://fsa-puppy-bowl.herokuapp.com/api/${cohortName}`;
 const fetchAllPlayers = async () => {
   try {
     // TODO
+    const response = await fetch(`${API_URL}/players`);
+    const result = await response.json();
+    console.log(result);
+    state.players = result.data;
+    console.log(result.data);
+    renderAllPlayers(result.data);
+    return state.players;
   } catch (err) {
     console.error("Uh oh, trouble fetching players!", err);
   }
@@ -23,6 +34,13 @@ const fetchAllPlayers = async () => {
 const fetchSinglePlayer = async (playerId) => {
   try {
     // TODO
+    const response = await fetch(`${API_URL}/players/${playerId}`);
+    const result = await response.json();
+    console.log(result);
+    state.players = result.data;
+    console.log(result.data);
+    renderSinglePlayer(result.data);
+    return state.players;
   } catch (err) {
     console.error(`Oh no, trouble fetching player #${playerId}!`, err);
   }
@@ -36,6 +54,20 @@ const fetchSinglePlayer = async (playerId) => {
 const addNewPlayer = async (playerObj) => {
   try {
     // TODO
+    await fetch(`${API_URL}/players/${playerId}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name,
+        id,
+        breed,
+        image,
+        teamname,
+      }),
+    });
+    await fetchAllPlayers();
   } catch (err) {
     console.error("Oops, something went wrong with adding that player!", err);
   }
@@ -48,6 +80,10 @@ const addNewPlayer = async (playerObj) => {
 const removePlayer = async (playerId) => {
   try {
     // TODO
+    await fetch(`${API_URL}/players/${playerId}`, {
+      method: "DELETE",
+    });
+    await fetchAllPlayers();
   } catch (err) {
     console.error(
       `Whoops, trouble removing player #${playerId} from the roster!`,
@@ -77,6 +113,55 @@ const removePlayer = async (playerId) => {
  */
 const renderAllPlayers = (playerList) => {
   // TODO
+  const playersContainer = document.getElementById("players-container");
+  const playerList = state.players;
+
+  if (!playerList || playerList.length === 0) {
+    playersContainer.innerHTML = "<h3>No players found</h3>";
+    return;
+  }
+
+  //resets html of all players
+  playersContainer.innerHTML = "";
+
+  //creates a card for each player
+  playerList.forEach((player) => {
+    const playerElement = document.createElement("div");
+    playerElement.classList.add("player-card");
+    playerElement.innerHTML = `
+    <h4>${player.name}</h4>
+    <p>${player.id}</p>
+    <p>${player.breed}</p>
+    <img src="${player.imageUrl}" alt="${player.name}">
+    <p>${player.teamname}</p>
+    <button class="render-button" data-id="${player.id}">Render</button>
+    <button class="delete-button" data-id="${player.id}">Remove</button>
+        `;
+    playersContainer.appendChild(playerElement);
+
+    const renderButton = playerElement.querySelector(".render-button");
+    //add event listener to the delete button so we can render a player
+    renderButton.addEventListener("click", (event) => {
+      try {
+        event.preventDefault();
+        renderSinglePlayer(player.id);
+      } catch (error) {
+        console.log(error);
+      }
+    });
+
+    const deleteButton = playerElement.querySelector(".delete-button");
+    //add event listener to the delete button so we can delete a player
+    deleteButton.addEventListener("click", (event) => {
+      try {
+        event.preventDefault();
+        removePlayer(player.id);
+      } catch (error) {
+        console.log(error);
+      }
+    });
+
+  });
 };
 
 /**
@@ -94,6 +179,55 @@ const renderAllPlayers = (playerList) => {
  */
 const renderSinglePlayer = (player) => {
   // TODO
+
+  const playersContainer = document.getElementById("players-container");
+  const player = state.players.playerId;
+
+  if (!player || player.length === 0) {
+    playersContainer.innerHTML = "<h3>No player found</h3>";
+    return;
+  }
+
+  //resets html of all players
+  playersContainer.innerHTML = "";
+
+  //creates a card for each player
+  const playerElement = document.createElement("div");
+  playerElement.classList.add("player-card");
+  playerElement.innerHTML = `
+            <h4>${player.name}</h4>
+            <p>${player.id}</p>
+            <p>${player.breed}</p>
+            <img src="${player.imageUrl}" alt="${player.name}">
+            <p>${player.teamname}</p>
+            <button class="back-button" data-id="${player.id}">Back</button>
+            <button class="delete-button" data-id="${player.id}">Remove</button>
+        `;
+  playersContainer.appendChild(playerElement);
+
+  const backButton = playerElement.querySelector(".back-button");
+  //add event listener to the delete button so we can re-render players
+  backButton.addEventListener("click", (event) => {
+    try {
+      event.preventDefault();
+      renderAllPlayers();
+    } catch (error) {
+      console.log(error);
+    }
+  });
+
+  const deleteButton = playerElement.querySelector(".delete-button");
+  //add event listener to the delete button so we can delete a player
+  deleteButton.addEventListener("click", (event) => {
+    try {
+      event.preventDefault();
+      removePlayer(player.id);
+    } catch (error) {
+      console.log(error);
+    }
+  });
+
+  
 };
 
 /**
@@ -104,6 +238,26 @@ const renderSinglePlayer = (player) => {
 const renderNewPlayerForm = () => {
   try {
     // TODO
+    const form = document.querySelector("#new-player-form");
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      await createNewPlayer(
+        form.name.value,
+        form.id.value,
+        form.breed.value,
+        form.imageUrl.value,
+        form.teamname.value
+      );
+
+      //clears the form after we create the new recipe
+      form.name.value = "";
+      form.id.value = "";
+      form.breed.value = "";
+      form.imageUrl.value = "";
+      form.teamname.value = "";
+    });
+    addNewPlayer();
   } catch (err) {
     console.error("Uh oh, trouble rendering the new player form!", err);
   }
@@ -113,6 +267,7 @@ const renderNewPlayerForm = () => {
  * Initializes the app by fetching all players and rendering them to the DOM.
  */
 const init = async () => {
+  console.log(state.players);
   const players = await fetchAllPlayers();
   renderAllPlayers(players);
 
