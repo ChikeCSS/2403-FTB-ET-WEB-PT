@@ -45,6 +45,15 @@ const state = {
  * @returns {(key: string, itemToFilter: string) => object[]} a function that takes a key
  * and itemToFilter and returns an array of objects filtered by that criteria
  */
+const filterList = (list) => {
+  return (key, itemToFilter) => {
+    console.log("inside", key, itemToFilter);
+    return list.filter((item) => console.log(item[key] !== itemToFilter));
+  };
+};
+
+console.log(filterList(state.people)("id", 4));
+console.log(filterList(state.people)("name", "Ashwin"));
 
 /**
  * 👉 STEP 2: Create a function called converter with the following attributes
@@ -53,6 +62,9 @@ const state = {
  * @param {Number} rate - conversion rate
  * @returns {Number} - converted number
  */
+const converter = (input, rate) => {
+  return parseFloat((input * rate).toFixed(2));
+};
 
 /**
  * 👉 STEP 3: Create a function called milesToYards with the following attributes
@@ -62,6 +74,9 @@ const state = {
  * @param {Number} input - number to convert
  * @returns {Number} - converted number
  */
+const milesToYards = (input) => {
+  return converter(input, 1760);
+};
 
 /**
  * 👉 STEP 4: Create a function called lbsToKg with the following attributes
@@ -71,6 +86,9 @@ const state = {
  * @param {Number} input - number to convert
  * @returns {Number} - converted number
  */
+const lbsToKg = (input) => {
+  return converter(input, 0.453592);
+};
 
 /**
  * 👉 STEP 4: Create a function called convertMilesFilterByYards with the following attributes
@@ -81,6 +99,13 @@ const state = {
  * @param {Number} yards - number of yards to filter by
  * @returns {object[]} - an array of objects filtered by yards provided
  */
+const convertMilesFilterByYards = (list, yards) => {
+  const newList = list.map((item) => {
+    item.yards = milesToYards(item.distance);
+    return item;
+  });
+  return filterList(newList)("yards", yards);
+};
 
 /**
  *  What are the 5 most frequent words that appear in state.words, and how many times do they each appear?
@@ -95,11 +120,11 @@ const state = {
  */
 
 function getFrequency(frequencies, key) {
-  //   if (!frequencies[key]) {
-  //     frequencies[key] = 1;
-  //   } else {
-  //     frequencies[key] += 1;
-  //   }
+  if (!frequencies[key]) {
+    frequencies[key] = 1;
+  } else {
+    frequencies[key] += 1;
+  }
 
   //rewrite if / else as ternary conditional
   frequencies[key] = !frequencies[key] ? 1 : (frequencies[key] += 1);
@@ -116,17 +141,20 @@ function getTokenFrequency(list) {
   return list.reduce(getFrequency, {});
 }
 
-// const freq = getTokenFrequency(state.words);
+console.log(state.words);
+const freq = getTokenFrequency(state.words);
+console.log(freq);
 
-// const sortedTokens = Object.entries(freq).sort((t1, t2) => {
-//   return t2[1] - t1[1];
-// });
+const sortedTokens = Object.entries(freq).sort((t1, t2) => {
+  console.log(t1, t2);
+  return t2[1] - t1[1];
+});
 
-// console.log(
-//   `The 5 most frequent words and their frequencies are: \n${sortedTokens
-//     .slice(0, 5)
-//     .join("\n")}`
-// );
+console.log(
+  `The 5 most frequent words and their frequencies are: \n${sortedTokens
+    .slice(0, 5)
+    .join("\n")}`
+);
 
 module.exports = {
   filterList,
