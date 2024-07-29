@@ -1,5 +1,7 @@
 # Block 28 React Router Workshop
 
+https://66a7fde71c9eef6f74ca3559--effortless-lamington-71f19e.netlify.app/
+
 Our goal in the workshop is to build a simple application that navigates between two routes `/blue` and `/red`. Each will render a simple component with the background being that specific color. It will be something like this:
 
 ![Example](./imgs/example.png)
